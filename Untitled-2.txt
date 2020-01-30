@@ -1,0 +1,76 @@
+function startDB(){
+    
+  firebase.initializeApp({
+
+  apiKey: "AIzaSyCOQcG5zVbMYaoG_LoAX_0NoX5-lUGlep4",
+  authDomain: "cerberus-fractalia.firebaseapp.com",
+  databaseURL: "https://cerberus-fractalia.firebaseio.com",
+  projectId: "cerberus-fractalia",
+  storageBucket: "cerberus-fractalia.appspot.com",
+  messagingSenderId: "863328238295",
+  appId: "1:863328238295:web:a03c978ffc4c52eb1b8e92",
+  measurementId: "G-QCRG60VQPF"
+
+  });
+
+  var db = firebase.firestore();
+
+  return db;
+
+}
+
+function createOnDB(u){
+  
+  var docData = {
+    u_nome: u.name,
+    u_cpf: u.cpf,
+    u_matricula: u.matricula,
+    u_email: u.email,
+    u_pw: u.pw,
+    u_pw2: u.pw2
+  }
+
+  console.log(docData);
+
+  db = startDB();
+
+  db.collection("user").doc().set(docData)
+    .then(window.alert("Mensagem Enviada!"))
+
+  
+}
+
+
+function CriaObj(nome, cpf, email, pw, pw2, matricula){
+    u = new user();  
+    u.setUser(nome, cpf, email, pw, pw2, matricula);
+    return u;
+}
+
+function getData(){
+
+    var nome = document.getElementById('nome').value;
+    var cpf = document.getElementById('cpf').value;
+    var matricula = document.getElementById('matricula').value;
+    var email = document.getElementById('email').value;
+    var pw = document.getElementById('pw').value;
+    var pw2 = document.getElementById('pw2').value;
+  
+    var u = CriaObj(nome, cpf, email, pw, pw2, matricula);
+
+    createOnDB (u);
+    
+  }
+
+  
+/*
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
+
+*/
