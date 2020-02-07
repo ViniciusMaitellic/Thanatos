@@ -2,8 +2,8 @@ const express = require("express");
 const app = express();
 const db = require("./database/db");
 const bodyParser = require('body-parser');
-const router = require('./controller/router');
-
+const userController = require('./user/userController');
+const loginController = require('./login/loginController');
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
@@ -46,18 +46,14 @@ db.auth().signInWithEmailAndPassword(email, pw).then(function (sucsses) {
 /*///pega configs do firebase (fim)
 
 
-app.use("/",router);
+app.use("/",userController);
 
-
-
+app.use("/",loginController);
 
 app.get("/", function (req, res) {
 
     res.render("login");
 })
-
-
-
 
 app.post("/", function (req, res) {
     
